@@ -101,7 +101,7 @@ node src/cli.js --repo-path /absolute/path/to/repo --json
 node src/cli.js --cursor 'CURSOR' --json
 ```
 
-默认输出可读文本，`--json` 返回同样的结构化结果。查询失败、权限不足、部分日志无法读取时退出码为 1；参数错误为 2；成功取得 CI 失败报告时退出码为 0。
+默认输出可读文本，`--json` 返回同样的结构化结果。查询失败（包括 HTTP 404/410 的 `unavailable`）、权限不足、部分日志无法读取或续读报告已变化时退出码为 1；参数错误为 2；成功取得 CI 失败报告时退出码为 0。
 
 ## 结果与位置含义
 
@@ -120,7 +120,7 @@ node src/cli.js --cursor 'CURSOR' --json
 
 位置取自日志明确提供的信息。缺少位置时返回“日志未提供文件与行号”；Node 内置 `node:internal` 调用栈保留在原文中。
 
-运行状态包括 `success`、`failed`、`running`、`cancelled`、`not_found`、`incomplete`、`permission_denied`、`query_failed` 和 `completed_without_error_log`；续读时另有 `changed`。`incomplete` 表示部分日志读取失败。取消的运行若包含失败任务，仍会返回对应错误。
+运行状态包括 `success`、`failed`、`running`、`cancelled`、`not_found`、`incomplete`、`permission_denied`、`unavailable`、`query_failed` 和 `completed_without_error_log`；续读时另有 `changed`。`incomplete` 表示部分日志读取失败。取消的运行若包含失败任务，仍会返回对应错误。
 
 ## 读取范围与限制
 

@@ -37,7 +37,14 @@ try {
   const result = await inspect(inputSchema.parse(input));
   console.log(json ? JSON.stringify(result, null, 2) : format(result));
   if (
-    ["query_failed", "permission_denied", "incomplete"].includes(result.status)
+    ![
+      "success",
+      "failed",
+      "running",
+      "cancelled",
+      "not_found",
+      "completed_without_error_log",
+    ].includes(result.status)
   )
     process.exitCode = 1;
 } catch (error) {
