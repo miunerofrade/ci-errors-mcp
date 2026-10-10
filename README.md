@@ -44,7 +44,7 @@ gh auth status
 
 将路径替换为实际安装目录，并在客户端添加配置。桌面客户端可使用 Node 可执行文件的绝对路径；其运行环境还需能找到 `gh`。
 
-服务注册一个工具 `ci_errors`。工具描述与参数 Schema 包含用途、输入方式和结果含义，供客户端发现和调用。
+服务注册一个工具 `ci_errors`，每次调用返回一份 JSON 文本报告，包含完整错误原文、位置和续读字段。工具描述与参数 Schema 包含用途、输入方式和结果含义，供客户端发现和调用。
 
 ## 调用
 
@@ -59,6 +59,18 @@ gh auth status
 ```json
 { "repository": "OWNER/REPO", "run_id": 123 }
 ```
+
+通过 `attempt` 指定某次运行尝试，也支持链接中的 `/attempts/N`：
+
+```json
+{ "repository": "OWNER/REPO", "run_id": 123, "attempt": 1 }
+```
+
+```json
+{ "run_url": "https://github.com/OWNER/REPO/actions/runs/123/attempts/1" }
+```
+
+未指定时读取最新 attempt，并在结果中显示其编号。参数与链接的 attempt 必须一致；指定后运行信息、任务、日志和续读均绑定该次尝试。`attempt` 配合明确的运行链接或仓库与运行 ID 使用。
 
 通过本地仓库查询当前 HEAD 对应的运行：
 
@@ -84,7 +96,7 @@ gh auth status
 
 ```sh
 node src/cli.js --run-url https://github.com/OWNER/REPO/actions/runs/123
-node src/cli.js --repository OWNER/REPO --run-id 123 --json
+node src/cli.js --repository OWNER/REPO --run-id 123 --attempt 1 --json
 node src/cli.js --repo-path /absolute/path/to/repo --json
 node src/cli.js --cursor 'CURSOR' --json
 ```

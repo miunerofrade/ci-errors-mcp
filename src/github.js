@@ -41,17 +41,30 @@ async function git(path, args) {
 export async function selectRuns(input, api = gh) {
   let repository = input.repository,
     runId = input.run_id,
+    attempt = input.attempt,
     sha;
   if (input.run_url) {
     const u = new URL(input.run_url);
     const m = u.pathname.match(
-      /^\/([^/]+\/[^/]+)\/actions\/runs\/(\d+)(?:\/|$)/,
+      /^\/([^/]+\/[^/]+)\/actions\/runs\/(\d+)(?:\/attempts\/(\d+))?(?:\/job\/\d+)?\/?$/,
     );
     if (u.hostname !== "github.com" || !m)
       throw new Error("Expected a github.com Actions run URL");
     repository = m[1];
     runId = Number(m[2]);
+    const urlAttempt = m[3] === undefined ? undefined : Number(m[3]);
+    if (
+      urlAttempt !== undefined &&
+      attempt !== undefined &&
+      urlAttempt !== attempt
+    )
+      throw new Error("attempt conflicts with the run URL attempt");
+    attempt = urlAttempt ?? attempt;
   }
+  if (attempt !== undefined && (!Number.isSafeInteger(attempt) || attempt < 1))
+    throw new Error("attempt must be a positive safe integer");
+  if (attempt !== undefined && !runId)
+    throw new Error("attempt requires run_url or repository+run_id");
   if (input.repo_path) {
     sha = await git(input.repo_path, ["rev-parse", "HEAD"]);
     if (!repository) {
@@ -72,7 +85,11 @@ export async function selectRuns(input, api = gh) {
   if (runId)
     return {
       repository,
-      runs: [await api(`repos/${repository}/actions/runs/${runId}`)],
+      runs: [
+        await api(
+          `repos/${repository}/actions/runs/${runId}${attempt === undefined ? "" : `/attempts/${attempt}`}`,
+        ),
+      ],
     };
   if (!sha)
     throw new Error("Provide run_id, run_url or repo_path (current HEAD)");

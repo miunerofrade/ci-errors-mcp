@@ -12,7 +12,7 @@ for (let i = 0; i < args.length; i++) {
   }
   if (arg === "--help") {
     console.log(
-      "ci-errors [--run-url URL | --repository owner/repo --run-id ID | --repo-path PATH] [--cursor CURSOR] [--max-chars N] [--json]",
+      "ci-errors [--run-url URL | --repository owner/repo --run-id ID | --repo-path PATH] [--attempt N] [--cursor CURSOR] [--max-chars N] [--json]",
     );
     process.exit(0);
   }
@@ -20,6 +20,7 @@ for (let i = 0; i < args.length; i++) {
     "--run-url": "run_url",
     "--repository": "repository",
     "--run-id": "run_id",
+    "--attempt": "attempt",
     "--repo-path": "repo_path",
     "--cursor": "cursor",
     "--max-chars": "max_chars",
@@ -28,7 +29,7 @@ for (let i = 0; i < args.length; i++) {
     console.error("Unknown or incomplete argument: " + arg);
     process.exit(2);
   }
-  input[key] = ["run_id", "max_chars"].includes(key)
+  input[key] = ["run_id", "attempt", "max_chars"].includes(key)
     ? Number(args[++i])
     : args[++i];
 }

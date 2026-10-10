@@ -7,6 +7,12 @@ export const inputSchema = z
       .regex(/^[-\w.]+\/[-\w.]+$/)
       .optional(),
     run_id: z.number().int().positive().optional(),
+    attempt: z
+      .number()
+      .int()
+      .positive()
+      .max(Number.MAX_SAFE_INTEGER)
+      .optional(),
     repo_path: z
       .string()
       .regex(/^(?:\/|[A-Za-z]:[\\/])/, "Use an absolute repository path")
@@ -15,6 +21,12 @@ export const inputSchema = z
     max_chars: z.number().int().min(1000).max(64000).default(16000),
   })
   .strict()
+  .refine(
+    (input) =>
+      input.attempt === undefined ||
+      !!(input.run_url || (input.repository && input.run_id)),
+    { message: "attempt requires run_url or repository+run_id" },
+  )
   .refine(
     (input) =>
       !!(
