@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/runner/work/SEUdaily/SEUdaily/scripts/validate-terminal.py", line 217, in <module>
+    if __name__ == '__main__': main()
+  File "/Users/runner/work/SEUdaily/SEUdaily/scripts/validate-terminal.py", line 209, in main
+    runs = [terminal() for _ in range(args.repeats)]
+  File "/Users/runner/work/SEUdaily/SEUdaily/scripts/validate-terminal.py", line 121, in terminal
+    assert any(r.get('deleted') for r in records()), 'session picker must delete the selected conversation'
+AssertionError: session picker must delete the selected conversation
+##[error]Process completed with exit code 1.

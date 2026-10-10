@@ -1,0 +1,25 @@
+{
+  "name": "ci-errors-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "ci-errors": "src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/server.js",
+    "format": "prettier --write src tests/*.js README.md VERIFICATION.md package.json",
+    "check": "prettier --check src tests/*.js README.md VERIFICATION.md package.json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

@@ -1,0 +1,16 @@
+# Subtest: HTTP skill discovery
+not ok 1 - HTTP skill discovery
+  ---
+  location: 'D:\\a\\SEUdaily\\SEUdaily\\tests\\test_agent_http.mjs:21:1'
+  error: |-
+    The expression evaluated to a falsy value:
+      assert.ok(noticeFiles.files.every(file=>file.path.includes('/practice/seu-jwc-1/')))
+  code: 'ERR_ASSERTION'
+  expected: true
+  actual: false
+  stack: |-
+    TestContext.<anonymous> (D:\a\SEUdaily\SEUdaily\tests\test_agent_http.mjs:53:240)
+    async Test.run (node:internal/test_runner/test:1054:7)
+  ...
+# Subtest: next passing test
+ok 2 - next passing test

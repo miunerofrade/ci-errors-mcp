@@ -1,0 +1,15 @@
+2026-10-10T09:30:26.2820880Z   UV_PYTHON_INSTALL_DIR: /Users/runner/work/_temp/uv-python-dir
+2026-10-10T09:30:26.2821190Z   UV_CACHE_DIR: /Users/runner/work/_temp/setup-uv-cache
+2026-10-10T09:30:26.2821410Z ##[endgroup]
+2026-10-10T09:30:28.9375160Z Traceback (most recent call last):
+2026-10-10T09:30:28.9391470Z   File "/Users/runner/work/ExampleProject/ExampleProject/scripts/validate-terminal.py", line 217, in <module>
+2026-10-10T09:30:28.9525110Z     if __name__ == '__main__': main()
+2026-10-10T09:30:28.9525480Z                                ~~~~^^
+2026-10-10T09:30:28.9525910Z   File "/Users/runner/work/ExampleProject/ExampleProject/scripts/validate-terminal.py", line 209, in main
+2026-10-10T09:30:28.9526350Z     runs = [terminal() for _ in range(args.repeats)]
+2026-10-10T09:30:28.9526590Z             ~~~~~~~~^^
+2026-10-10T09:30:28.9527000Z   File "/Users/runner/work/ExampleProject/ExampleProject/scripts/validate-terminal.py", line 121, in terminal
+2026-10-10T09:30:28.9527610Z     assert any(r.get('deleted') for r in records()), 'session picker must delete the selected conversation'
+2026-10-10T09:30:28.9528030Z            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-10T09:30:28.9528430Z AssertionError: session picker must delete the selected conversation
+2026-10-10T09:30:28.9536100Z ##[error]Process completed with exit code 1.
